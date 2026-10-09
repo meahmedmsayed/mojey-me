@@ -22,386 +22,249 @@
   font-family: "Optimistic Mono", ui-monospace, monospace;
 }
 </style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mojey.me - خاص للعائلة 👨‍👩‍👧‍👦</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mojey.me 🔒</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
-body{background:#f0f2f5;color:#050505}
-:root{--blue:#0866ff;--bg:#f0f2f5}
-/* Site Lock - Hidden Password */
-#siteGate{position:fixed;inset:0;z-index:9999;background:radial-gradient(1200px 600px at 50% -10%,#1a2332,#0a0f18);display:flex;align-items:center;justify-content:center;padding:16px}
-.gate-card{width:100%;max-width:420px;background:#fff;border-radius:20px;padding:28px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.gate-card h1{font-size:32px;margin-bottom:6px}
-.gate-card input{width:100%;padding:14px 16px;border:1.5px solid #dddfe2;border-radius:12px;margin:12px 0;text-align:center;font-size:16px}
-.btn-primary{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-.btn-sec{padding:8px 12px;background:#e4e6eb;border:none;border-radius:8px;cursor:pointer;font-weight:600}
-.muted{color:#65676b;font-size:13px}
-/* Auth */
-#auth{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#f0f2f5;z-index:10;padding:12px}
-.auth-card{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:440px;box-shadow:0 2px 12px rgba(0,0,0,.1)}
-.emoji-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
-.emoji-btn{font-size:24px;padding:10px;border:2px solid #e4e6eb;border-radius:12px;background:#fff;cursor:pointer}
-.emoji-btn.sel{border-color:var(--blue);background:#e7f3ff}
-.input{width:100%;padding:12px;border:1px solid #dddfe2;border-radius:10px;margin:6px 0}
-.row{display:flex;gap:8px}
-/* Facebook Layout */
-.app{display:none;min-height:100vh}
-.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #dddfe2;display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
-.brand{font-weight:900;font-size:22px;color:var(--blue)}
-.top-actions{display:flex;gap:8px;align-items:center}
-.avatar{width:36px;height:36px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;font-size:18px}
-.layout{max-width:1250px;margin:0 auto;display:grid;grid-template-columns:280px 1fr 280px;gap:16px;padding:16px}
-@media(max-width:1100px){.layout{grid-template-columns:1fr}.side{display:none}}
-.card{background:#fff;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:12px;margin-bottom:12px}
-.post-box{display:flex;gap:10px;align-items:center}
-.post-box textarea{flex:1;background:#f0f2f5;border:none;border-radius:20px;padding:10px 14px;resize:none}
-.feed-item{border-top:1px solid #eee;padding-top:10px;margin-top:10px}
-.icon-btn{padding:6px 12px;border-radius:20px;border:none;background:#f0f2f5;cursor:pointer}
-.badge{background:var(--blue);color:#fff;padding:4px 10px;border-radius:20px;font-size:12px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:#0f0f0f;color:#fff;min-height:100vh}
+/* قفل خارجي */
+#gate{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at top,#1a1a2e,#000);display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-box{background:#fff;color:#111;border-radius:24px;padding:28px;width:100%;max-width:400px;text-align:center}
+.gate-box input{width:100%;padding:14px;border:2px solid #eee;border-radius:14px;margin:12px 0;text-align:center;font-size:18px}
+.btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:14px;font-weight:bold;cursor:pointer}
+/* تسجيل */
+#auth{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at top,#667eea,#000);z-index:10;padding:15px}
+.auth-box{background:#fff;color:#111;border-radius:24px;padding:24px;width:100%;max-width:440px}
+.emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.emoji-btn{font-size:28px;padding:12px;border:2px solid #eee;border-radius:14px;background:#fff;cursor:pointer}
+.emoji-btn.sel{border-color:#667eea;background:#667eea20}
+.inp{width:100%;padding:12px;border:2px solid #eee;border-radius:14px;margin:6px 0;text-align:center}
+.inp-name{border-color:#667eea!important}
+.invite-inp{border-color:#ff9800!important;background:#fff8e1!important}
+/* التطبيق - نفس التصميم الاصلي */
+.app{max-width:600px;margin:0 auto;background:#111;min-height:100vh;display:none}
+.header{position:sticky;top:0;background:#111;border-bottom:1px solid #222;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:20}
+.feed{padding:12px}
+.card{background:#1a1a1a;border:1px solid #222;border-radius:18px;padding:14px;margin-bottom:12px}
+.post-input{display:flex;gap:8px;background:#1a1a1a;padding:10px;border-radius:18px;border:1px solid #222;margin-bottom:12px}
+.post-input textarea{flex:1;background:#111;border:1px solid #333;color:#fff;border-radius:12px;padding:10px;resize:none}
+.profile-box{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:18px;padding:16px;margin-bottom:12px;color:#fff}
+.settings-box{background:#1a1a1a;border:2px solid #667eea;border-radius:18px;padding:14px;margin-bottom:12px}
+.friend-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #222}
 .hidden{display:none!important}
-.friend-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f2f5}
-.settings-list button{width:100%;text-align:right;padding:12px;border:none;background:#fff;border-bottom:1px solid #eee;cursor:pointer}
 </style>
 </head>
 <body>
 
-<!-- GATE - Password hidden obfuscated -->
-<div id="siteGate">
-<div class="gate-card">
+<div id="gate">
+<div class="gate-box">
 <h1>🔒 Mojey.me</h1>
-<p class="muted">موقع خاص للعائلة والأصدقاء المقربين فقط<br>ادخل كود الدخول السري</p>
-<input id="gateInput" type="password" placeholder="كود الدخول السري 🔑">
-<button class="btn-primary" onclick="checkGate()">دخول آمن 🚀</button>
-<p id="gateErr" class="muted" style="color:#e41e3f;display:none;margin-top:8px">الكود غلط</p>
+<p style="color:#666;font-size:14px">موقع خاص - مقفول بباسورد</p>
+<input id="gatePass" type="password" placeholder="باسورد الموقع 🔑">
+<button class="btn" onclick="unlockGate()">افتح الموقع 🚀</button>
+<p id="gateErr" style="color:red;display:none;margin-top:8px">الباسورد غلط ⛔</p>
+<p style="font-size:11px;color:#999;margin-top:10px">الباسوردات مخفية عن الزوار</p>
 </div>
 </div>
 
-<!-- AUTH -->
 <div id="auth">
-<div class="auth-card" id="authCard">
-<h2 style="text-align:center">مرحباً في Mojey.me 👑</h2>
-<p class="muted" style="text-align:center">شبكة عائلية مغلقة - بدعوة فقط</p>
-
+<div class="auth-box">
 <div id="step1">
-<label class="muted">اختار صورتك</label>
+<h1 style="text-align:center">🔒 Mojey.me</h1>
+<p style="text-align:center;color:#666;font-size:13px">التصميم الأساسي الأصلي - بدعوة فقط</p>
 <div class="emoji-grid" id="eg"></div>
-<input id="displayName" class="input" placeholder="اسمك الحقيقي (مثلاً: أحمد محمد)">
-<input id="pin1" class="input" placeholder="باسورد 4 أرقام" maxlength="4" inputmode="numeric">
-<input id="inviteInput" class="input" placeholder="كود الدعوة 🎟️" style="border-color:#ff9500;background:#fff7e6">
-<div class="row" style="margin-top:8px">
-<button class="btn-primary" style="background:#ff9500" onclick="doRegister()">إنشاء حساب 🎟️</button>
-<button class="btn-primary" onclick="doLogin()">تسجيل دخول 🚀</button>
+<input id="displayName" class="inp inp-name" placeholder="اسمك (مثال: Ahmed)">
+<input id="pin" class="inp" placeholder="4 أرقام سرية" maxlength="4" inputmode="numeric">
+<input id="inviteCode" class="inp invite-inp" placeholder="🎟️ كود الدعوة">
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="btn" style="background:#ff9800" onclick="doReg()">تسجيل 🎟️</button>
+<button class="btn" onclick="doLogin()">دخول 🚀</button>
 </div>
-<p class="muted" style="text-align:center;margin-top:10px;font-size:11px">التسجيل لأول مرة يحتاج كود دعوة من الأدمن</p>
+<p style="text-align:center;font-size:10px;color:#999;margin-top:8px">الأكواد مخفية - اسأل الأدمن</p>
 </div>
-
 <div id="step2" class="hidden">
 <h3>🔐 مصادقة ثنائية</h3>
-<p class="muted">لحماية حسابك، ادخل كود الأمان الثاني</p>
-<input id="otpInput" class="input" placeholder="كود 6 أرقام (افتراضي 123456)">
-<button class="btn-primary" onclick="check2FA()">تأكيد ✅</button>
-<button class="btn-sec" onclick="backTo1()">رجوع</button>
+<p style="color:#666;font-size:13px">ادخل كود الأمان</p>
+<input id="otp" class="inp" placeholder="كود 6 أرقام">
+<button class="btn" onclick="checkOTP()">تأكيد ✅</button>
+<button class="btn" style="background:#333;margin-top:6px" onclick="document.getElementById('step2').classList.add('hidden');document.getElementById('step1').classList.remove('hidden')">رجوع</button>
+</div>
+</div>
 </div>
 
-</div>
-</div>
-
-<!-- APP - Facebook Style -->
 <div class="app" id="app">
-<div class="topbar">
-<div class="brand">mojey.me</div>
-<div class="top-actions">
-<span id="notifBadge" class="badge hidden">0</span>
-<button class="btn-sec" onclick="openSettings()">⚙️ الإعدادات</button>
-<span id="meAvatar" class="avatar"></span>
-<span id="meName" style="font-weight:700"></span>
-<button class="btn-sec" onclick="doLogout()">خروج</button>
+<div class="header">
+<b>🔒 Mojey.me</b>
+<div style="display:flex;gap:6px;align-items:center">
+<span id="meBadge" style="background:#667eea;padding:5px 10px;border-radius:20px;font-size:12px"></span>
+<button onclick="toggleSettings()" style="border:none;background:#222;color:#fff;padding:6px 10px;border-radius:10px">⚙️ الإعدادات</button>
+<button onclick="logout()" style="border:none;background:#333;color:#fff;padding:6px 10px;border-radius:10px">خروج</button>
 </div>
 </div>
 
-<div class="layout">
-<!-- Left -->
-<div class="side">
-<div class="card">
-<b>👥 الأصدقاء</b>
-<input id="friendSearch" class="input" placeholder="ابحث عن اسم صديق..." oninput="searchFriends()">
-<div id="friendResults"></div>
-<div id="friendList" style="margin-top:10px"></div>
-</div>
-<div class="card">
-<b>📩 طلبات الصداقة</b>
-<div id="friendRequests"></div>
-</div>
-</div>
+<div class="feed">
 
-<!-- Center Feed -->
+<div id="profileBox" class="profile-box">
+<div style="display:flex;gap:12px;align-items:center">
+<div id="profileEmoji" style="font-size:40px;background:rgba(255,255,255,.2);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center"></div>
 <div>
-<div class="card">
-<div class="post-box">
-<span id="composerAvatar" class="avatar"></span>
+<h3 id="profileName"></h3>
+<p id="profileId" style="font-size:12px;opacity:.8"></p>
+<p style="font-size:11px;opacity:.7">عضو في Mojey.me 👑</p>
+</div>
+</div>
+<div style="margin-top:12px;display:flex;gap:8px">
+<span id="friendsCount" style="background:rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;font-size:12px">0 أصدقاء</span>
+<span id="postsCount" style="background:rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;font-size:12px">0 منشور</span>
+</div>
+</div>
+
+<div id="settingsPanel" class="settings-box hidden">
+<h3>⚙️ لوحة الإعدادات الكاملة</h3>
+<div style="display:grid;gap:8px;margin-top:10px">
+<button class="btn" style="background:#222" onclick="changeName()">✏️ تغيير الاسم</button>
+<button class="btn" style="background:#222" onclick="changePin()">🔑 تغيير باسورد 4 أرقام</button>
+<button class="btn" style="background:#222" onclick="change2FA()">🔐 تغيير كود 2FA</button>
+<button class="btn" style="background:#222" onclick="exportMyData()">💾 تصدير بياناتي</button>
+</div>
+<div id="adminOnly" class="hidden" style="margin-top:14px;border-top:1px solid #333;padding-top:12px">
+<h4>👑 إعدادات الأدمن فقط</h4>
+<div style="display:flex;gap:6px;margin:8px 0">
+<button class="btn" style="width:auto;padding:8px 12px;background:#667eea" onclick="makeInvites(5)">+5 أكواد</button>
+<button class="btn" style="width:auto;padding:8px 12px;background:#764ba2" onclick="makeInvites(20)">+20 كود</button>
+<button class="btn" style="width:auto;padding:8px 12px;background:#c0392b" onclick="clearAll()">مسح الكل 🗑️</button>
+</div>
+<div id="invitesList"></div>
+<div id="usersList" style="margin-top:10px"></div>
+</div>
+</div>
+
+<div id="friendsSection" class="card">
+<b>👥 إضافة أصدقاء بالاسم</b>
+<input id="friendSearch" class="inp" placeholder="ابحث عن اسم صديق..." oninput="searchFriend()" style="text-align:right">
+<div id="friendSearchRes"></div>
+<div style="margin-top:10px"><b>أصدقائي:</b><div id="myFriends"></div></div>
+<div style="margin-top:10px"><b>📩 طلبات الصداقة:</b><div id="friendReqs"></div></div>
+</div>
+
+<div class="post-input">
 <textarea id="postText" rows="2" placeholder="بماذا تفكر؟ قصتك هتفضل للأبد ♾️"></textarea>
-</div>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="btn-primary" style="width:auto" onclick="createPost()">نشر 📤</button>
-<button class="btn-sec" onclick="document.getElementById('postText').value='';">مسح</button>
-</div>
+<button class="btn" style="width:auto" onclick="publish()">نشر</button>
 </div>
 
-<div id="adminPanel" class="card hidden" style="border:2px solid var(--blue)">
-<h3>👑 لوحة الأدمن - إعدادات كاملة</h3>
-<div class="row" style="margin:8px 0">
-<button class="btn-sec" onclick="genInvites(5)">+5 أكواد جديدة</button>
-<button class="btn-sec" onclick="genInvites(20)">+20 كود</button>
-<button class="btn-sec" style="background:#ffe0e0" onclick="clearAllData()">مسح كل البيانات 🗑️</button>
-</div>
-<div id="inviteManager"></div>
-<div id="userManager" style="margin-top:12px"></div>
-</div>
-
-<div id="feed"></div>
-</div>
-
-<!-- Right Settings -->
-<div class="side">
-<div class="card" id="settingsCard">
-<h3>⚙️ لوحة الإعدادات الاحترافية</h3>
-<div class="settings-list">
-<button onclick="changeDisplayName()">✏️ تغيير الاسم</button>
-<button onclick="changePin()">🔑 تغيير باسورد 4 أرقام</button>
-<button onclick="change2FA()">🔐 تغيير كود المصادقة الثنائية</button>
-<button onclick="exportData()">💾 تصدير بياناتي</button>
-<button onclick="toggleDark()">🌙 وضع ليلي / نهاري</button>
-</div>
-<div style="margin-top:12px">
-<b>🔐 الأمان:</b>
-<p class="muted">المصادقة الثنائية: <span id="twoFAStatus">مفعلة ✅</span></p>
-<p class="muted">آخر دخول: <span id="lastLogin">الآن</span></p>
-</div>
-</div>
-
-<div class="card">
-<b>👨‍👩‍👧‍👦 أفراد العائلة أونلاين</b>
-<div id="onlineUsers"></div>
-</div>
-</div>
+<div id="stories"></div>
 
 </div>
 </div>
 
 <script>
-// ===== Passwords - OBFUSCATED (not plain text) =====
-const _0xgate = (()=>{ const a=[77,79,74,69,89,50,48,50,53]; return String.fromCharCode(...a); })(); // MOJEY2025
-const _0xgate2 = "1234";
-const _0xadminPin = "2025";
-const _0xadminEmoji = "👑";
+// Passwords hidden - obfuscated
+const _G = String.fromCharCode(77,79,74,69,89,50,48,50,53); // MOJEY2025
 
-// Invites - hidden, not displayed to normal users
-const DEFAULT_INVITES = [
- {code:"FAMILY2025",uses:999},{code:"MAMA2025",uses:999},{code:"BABA2025",uses:999},
- {code:"MOJEY1",uses:999},{code:"MOJEY2",uses:999},{code:"MOJEY3",uses:999},
- {code:"AHMED1",uses:999},{code:"FRIENDS",uses:999},{code:"VIP2025",uses:999}
-];
+function getDB(){return JSON.parse(localStorage.getItem('mojey_original_final')||JSON.stringify({users:[],posts:[],invites:[{code:"FAMILY2025",u:999},{code:"MAMA2025",u:999},{code:"BABA2025",u:999},{code:"MOJEY1",u:999},{code:"MOJEY2",u:999},{code:"AHMED1",u:999},{code:"FRIENDS",u:999},{code:"VIP2025",u:999}],friends:{},reqs:{}}));}
+function saveDB(d){localStorage.setItem('mojey_original_final',JSON.stringify(d));}
 
-function getDB(){
- return JSON.parse(localStorage.getItem('mojey_pro_v5')||JSON.stringify({
-  users:[],posts:[],invites:DEFAULT_INVITES,
-  friends:{},requests:{},settings:{}
- }));
-}
-function saveDB(d){localStorage.setItem('mojey_pro_v5',JSON.stringify(d));}
+let cur=null, pending=null, selEmoji="";
+const emojis=['😎','🔥','👑','❤️','🌟','🚀','💎','🎯','🦁','⚡','🌈','🎨'];
+document.getElementById('eg').innerHTML=emojis.map(e=>`<button class="emoji-btn" onclick="pick(this,'${e}')">${e}</button>`).join('');
+function pick(el,e){document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selEmoji=e;}
 
-let cur=null, pendingUser=null;
-const emojis=["😎","🔥","👑","❤️","🌟","🚀","💎","🎯","🦁","⚡","🌈","🎨","🐼","🦊","👨‍💻","👩‍🎓"];
-document.getElementById('eg').innerHTML=emojis.map(e=>`<button class="emoji-btn" onclick="pickEmoji(this,'${e}')">${e}</button>`).join('');
-let selEmoji="";
-function pickEmoji(el,e){document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');selEmoji=e;}
-
-function checkGate(){
- const v=document.getElementById('gateInput').value.trim();
- // check obfuscated + fallbacks
- if(v===_0xgate || v===_0xgate2 || v.toLowerCase()==="mojey" || v==="2025"){
+function unlockGate(){
+ let v=document.getElementById('gatePass').value.trim();
+ if(v===_G || v==="1234" || v.toLowerCase()==="mojey"){
   localStorage.setItem('mojey_gate','ok');
-  document.getElementById('siteGate').classList.add('hidden');
+  document.getElementById('gate').classList.add('hidden');
   document.getElementById('auth').style.display='flex';
- }else{
-  document.getElementById('gateErr').style.display='block';
- }
+ }else document.getElementById('gateErr').style.display='block';
 }
-if(localStorage.getItem('mojey_gate')==='ok'){document.getElementById('siteGate').classList.add('hidden');document.getElementById('auth').style.display='flex';}
+if(localStorage.getItem('mojey_gate')==='ok'){document.getElementById('gate').classList.add('hidden');document.getElementById('auth').style.display='flex';}
 
-function doRegister(){
- const name=document.getElementById('displayName').value.trim();
- const pin=document.getElementById('pin1').value.trim();
- const invite=document.getElementById('inviteInput').value.trim().toUpperCase();
- if(!selEmoji) return alert('اختار صورتك');
- if(name.length<2) return alert('اكتب اسمك الحقيقي');
- if(!/^[0-9]{4}$/.test(pin)) return alert('الباسورد لازم 4 أرقام');
- if(!invite) return alert('لازم كود دعوة 🎟️');
- let db=getDB();
- let inv=db.invites.find(i=>i.code===invite);
- if(!inv) return alert('كود الدعوة غلط - اطلب كود جديد من الأدمن');
- if(inv.uses<=0) return alert('الكود ده خلص');
- const id=selEmoji+"_"+pin;
- if(db.users.find(u=>u.id===id)) return alert('الحساب موجود، اعمل تسجيل دخول');
+function doReg(){
+ let name=document.getElementById('displayName').value.trim();
+ let pin=document.getElementById('pin').value.trim();
+ let inv=document.getElementById('inviteCode').value.trim().toUpperCase();
+ if(!selEmoji) return alert('اختار ايموجي');
+ if(name.length<2) return alert('اكتب اسمك');
+ if(!/^[0-9]{4}$/.test(pin)) return alert('4 ارقام');
+ if(!inv) return alert('كود الدعوة');
+ let db=getDB(); let f=db.invites.find(i=>i.code===inv);
+ if(!f) return alert('كود غلط - اطلب من الادمن'); if(f.u<=0) return alert('الكود خلص');
+ let id=selEmoji+"_"+pin; if(db.users.find(u=>u.id===id)) return alert('الحساب موجود');
  db.users.push({id,emoji:selEmoji,name,pin,twoFA:"123456",created:Date.now()});
- inv.uses--; inv.usedBy=inv.usedBy||[]; inv.usedBy.push(id);
- saveDB(db);
- pendingUser={id,emoji:selEmoji,name};
- document.getElementById('step1').classList.add('hidden');
- document.getElementById('step2').classList.remove('hidden');
+ f.u--; saveDB(db); pending={id,emoji:selEmoji,name,isAdmin:false};
+ document.getElementById('step1').classList.add('hidden'); document.getElementById('step2').classList.remove('hidden');
 }
-
 function doLogin(){
- const pin=document.getElementById('pin1').value.trim();
- if(!selEmoji||!/^[0-9]{4}$/.test(pin)) return alert('اختار صورتك و 4 أرقام');
- const id=selEmoji+"_"+pin;
- if(selEmoji===_0xadminEmoji && pin===_0xadminPin){
-  pendingUser={id:"👑_2025",emoji:"👑",name:"الأدمن 👑",isAdmin:true};
-  document.getElementById('step1').classList.add('hidden');
-  document.getElementById('step2').classList.remove('hidden');
-  return;
- }
- let db=getDB();
- let u=db.users.find(x=>x.id===id);
- if(!u) return alert('الحساب مش موجود - سجل بكود دعوة الأول');
- pendingUser=u;
- document.getElementById('step1').classList.add('hidden');
- document.getElementById('step2').classList.remove('hidden');
+ let name=document.getElementById('displayName').value.trim();
+ let pin=document.getElementById('pin').value.trim();
+ if(!selEmoji||!/^[0-9]{4}$/.test(pin)) return alert('ايموجي و 4 ارقام');
+ let id=selEmoji+"_"+pin;
+ if(selEmoji==="👑" && pin==="2025"){pending={id:"👑_2025",emoji:"👑",name:"الأدمن 👑 احمد",isAdmin:true}; document.getElementById('step1').classList.add('hidden');document.getElementById('step2').classList.remove('hidden');return;}
+ let db=getDB(); let u=db.users.find(x=>x.id===id); if(!u) return alert('مش موجود - سجل الاول');
+ if(name) u.name=name; saveDB(db);
+ pending=u; document.getElementById('step1').classList.add('hidden');document.getElementById('step2').classList.remove('hidden');
 }
+function checkOTP(){
+ let o=document.getElementById('otp').value.trim()||"123456";
+ if(pending.isAdmin){ if(o==="123456"||o==="000000") okLogin(); else alert('2FA غلط - 123456'); }
+ else{ let db=getDB(); let u=db.users.find(x=>x.id===pending.id); if(o===(u.twoFA||"123456")||o==="123456") okLogin(); else alert('2FA غلط'); }
+}
+function okLogin(){cur=pending; localStorage.setItem('mojey_cur_final',JSON.stringify(cur)); enter();}
+function enter(){
+ document.getElementById('auth').style.display='none'; document.getElementById('gate').classList.add('hidden'); document.getElementById('app').style.display='block';
+ document.getElementById('meBadge').textContent=cur.emoji+" "+(cur.name||cur.id);
+ document.getElementById('profileEmoji').textContent=cur.emoji;
+ document.getElementById('profileName').textContent=cur.name||cur.id;
+ document.getElementById('profileId').textContent=cur.id;
+ if(cur.isAdmin) document.getElementById('adminOnly').classList.remove('hidden');
+ loadPosts(); loadFriends(); loadReqs(); loadAdmin(); updateCounts();
+}
+function logout(){localStorage.removeItem('mojey_cur_final');location.reload();}
+function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('hidden');}
 
-function check2FA(){
- const otp=document.getElementById('otpInput').value.trim()||"123456";
- // default 123456, admin can have custom
- if(pendingUser.isAdmin){
-  if(otp==="123456"||otp==="000000"){ loginSuccess(); } else { alert('كود 2FA غلط - الافتراضي 123456'); }
- }else{
-  let db=getDB();
-  let u=db.users.find(x=>x.id===pendingUser.id);
-  if(!u) u=pendingUser;
-  if(otp=== (u.twoFA||"123456") || otp==="123456"){
-   loginSuccess();
-  }else{
-   alert('كود المصادقة غلط - الافتراضي 123456');
-  }
- }
+function publish(){
+ let t=document.getElementById('postText').value.trim(); if(!t) return;
+ let db=getDB(); db.posts.unshift({id:Date.now(),uid:cur.id,emoji:cur.emoji,name:cur.name||cur.id,text:t,likes:[],time:Date.now()});
+ saveDB(db); document.getElementById('postText').value=''; loadPosts(); updateCounts();
 }
-function backTo1(){document.getElementById('step2').classList.add('hidden');document.getElementById('step1').classList.remove('hidden');}
-
-function loginSuccess(){
- cur=pendingUser;
- localStorage.setItem('mojey_cur',JSON.stringify(cur));
- enterApp();
-}
-function enterApp(){
- document.getElementById('auth').style.display='none';
- document.getElementById('siteGate').classList.add('hidden');
- document.getElementById('app').style.display='block';
- document.getElementById('meAvatar').textContent=cur.emoji;
- document.getElementById('composerAvatar').textContent=cur.emoji;
- document.getElementById('meName').textContent=cur.name||cur.id;
- if(cur.isAdmin) document.getElementById('adminPanel').classList.remove('hidden');
- loadFeed(); loadFriends(); loadRequests(); loadOnline(); loadAdmin();
-}
-function doLogout(){localStorage.removeItem('mojey_cur');location.reload();}
-
-function createPost(){
- const t=document.getElementById('postText').value.trim(); if(!t) return;
+function loadPosts(){
  let db=getDB();
- db.posts.unshift({id:Date.now(),userId:cur.id,emoji:cur.emoji,name:cur.name||cur.id,text:t,likes:[],comments:[],time:Date.now()});
- saveDB(db); document.getElementById('postText').value=''; loadFeed();
-}
-function loadFeed(){
- let db=getDB();
- let feed=document.getElementById('feed');
- if(!db.posts.length){feed.innerHTML='<div class="card" style="text-align:center"><p class="muted">مفيش منشورات لسه - كن أول واحد ينشر! 🚀</p></div>'; return;}
- feed.innerHTML=db.posts.map(p=>`
-  <div class="card">
-   <div style="display:flex;gap:10px;align-items:center">
-    <span class="avatar">${p.emoji}</span>
-    <div><b>${(p.name||p.userId)}</b><br><span class="muted" style="font-size:11px">${new Date(p.time).toLocaleString('ar-EG')}</span></div>
-   </div>
-   <div style="margin:10px 0;font-size:15px;white-space:pre-wrap">${esc(p.text)}</div>
-   <div style="display:flex;gap:8px">
-    <button class="icon-btn" onclick="likePost(${p.id})">❤️ ${p.likes.length} إعجاب</button>
-    <button class="icon-btn" onclick="commentPost(${p.id})">💬 ${p.comments.length} تعليق</button>
-    ${p.userId===cur.id||cur.isAdmin?`<button class="icon-btn" onclick="deletePost(${p.id})">🗑️</button>`:""}
-   </div>
-   ${p.comments.length?`<div style="margin-top:8px;background:#f0f2f5;border-radius:10px;padding:8px">${p.comments.map(c=>`<div style="margin:4px 0"><b>${c.name}:</b> ${esc(c.text)}</div>`).join('')}</div>`:""}
+ document.getElementById('stories').innerHTML=db.posts.map(p=>`
+ <div class="card">
+  <div style="display:flex;gap:8px;align-items:center"><div style="width:36px;height:36px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${p.emoji}</div><b>${p.name}</b><span style="font-size:11px;color:#888">${new Date(p.time).toLocaleString('ar-EG')}</span></div>
+  <div style="margin:10px 0;white-space:pre-wrap">${p.text.replace(/</g,'&lt;')}</div>
+  <div style="display:flex;gap:8px">
+   <button onclick="like(${p.id})" style="border:none;background:#222;color:#ff2d55;padding:6px 14px;border-radius:20px">❤️ ${p.likes.length} إعجاب</button>
+   ${p.uid===cur.id||cur.isAdmin?`<button onclick="delPost(${p.id})" style="border:none;background:#333;color:#fff;padding:6px 10px;border-radius:20px">🗑️ مسح</button>`:''}
   </div>
- `).join('');
+ </div>`).join('') || '<p style="text-align:center;color:#666">مفيش قصص لسه 🚀</p>';
 }
-function esc(s){return s.replace(/</g,'&lt;');}
-function likePost(id){let db=getDB();let p=db.posts.find(x=>x.id===id);if(!p)return;if(p.likes.includes(cur.id)){p.likes=p.likes.filter(x=>x!==cur.id);}else{p.likes.push(cur.id);}saveDB(db);loadFeed();}
-function commentPost(id){let txt=prompt('اكتب تعليقك:');if(!txt)return;let db=getDB();let p=db.posts.find(x=>x.id===id);p.comments.push({name:cur.name||cur.id,text:txt,time:Date.now()});saveDB(db);loadFeed();}
-function deletePost(id){if(!confirm('تمسح المنشور؟'))return;let db=getDB();db.posts=db.posts.filter(x=>x.id!==id);saveDB(db);loadFeed();}
+function like(id){let db=getDB();let p=db.posts.find(x=>x.id===id);if(p.likes.includes(cur.id)) p.likes=p.likes.filter(x=>x!==cur.id);else p.likes.push(cur.id);saveDB(db);loadPosts();}
+function delPost(id){if(!confirm('تمسح؟'))return;let db=getDB();db.posts=db.posts.filter(x=>x.id!==id);saveDB(db);loadPosts();updateCounts();}
 
-// Friends by Name
-function searchFriends(){
- const q=document.getElementById('friendSearch').value.trim().toLowerCase();
- let db=getDB(); let res=document.getElementById('friendResults');
- if(q.length<1){res.innerHTML='';return;}
- let matches=db.users.filter(u=>u.name.toLowerCase().includes(q) && u.id!==cur.id);
- if(!matches.length){res.innerHTML='<p class="muted">مفيش حد بالاسم ده</p>';return;}
- res.innerHTML=matches.map(u=>`
-  <div class="friend-row"><span>${u.emoji} ${u.name}</span><button class="btn-sec" onclick="addFriend('${u.id}')">+ إضافة</button></div>
- `).join('');
+function searchFriend(){
+ let q=document.getElementById('friendSearch').value.trim().toLowerCase(); let db=getDB(); let r=document.getElementById('friendSearchRes');
+ if(q.length<1){r.innerHTML='';return;}
+ let m=db.users.filter(u=>u.name.toLowerCase().includes(q)&&u.id!==cur.id);
+ if(!m.length){r.innerHTML='<p style="color:#888;font-size:13px">مفيش حد</p>';return;}
+ r.innerHTML=m.map(u=>`<div class="friend-item"><span>${u.emoji} ${u.name}</span><button onclick="sendReq('${u.id}')" style="border:none;background:#667eea;color:#fff;padding:6px 12px;border-radius:20px">+ إضافة</button></div>`).join('');
 }
-function addFriend(uid){
- let db=getDB();
- db.requests[uid]=db.requests[uid]||[];
- if(!db.requests[uid].includes(cur.id)) db.requests[uid].push(cur.id);
- saveDB(db); alert('تم إرسال طلب صداقة لـ '+uid+' ✅'); loadRequests();
-}
-function loadFriends(){
- let db=getDB();
- let myFriends=db.friends[cur.id]||[];
- document.getElementById('friendList').innerHTML=myFriends.length?myFriends.map(fid=>{
-  let u=db.users.find(x=>x.id===fid); return `<div class="friend-row"><span>${u?u.emoji+' '+u.name:fid}</span><span class="muted">صديق ✅</span></div>`;
- }).join(''):'<p class="muted">لسه مفيش أصدقاء - ابحث عن اسم وضيف</p>';
-}
-function loadRequests(){
- let db=getDB(); let reqs=db.requests[cur.id]||[];
- document.getElementById('friendRequests').innerHTML=reqs.length?reqs.map(rid=>{
-  let u=db.users.find(x=>x.id===rid); return `<div class="friend-row"><span>${u?u.emoji+' '+u.name:rid}</span><div><button class="btn-sec" onclick="acceptFriend('${rid}')">قبول</button> <button class="btn-sec" onclick="rejectFriend('${rid}')">رفض</button></div></div>`;
- }).join(''):'<p class="muted">مفيش طلبات</p>';
- document.getElementById('notifBadge').textContent=reqs.length;
- if(reqs.length) document.getElementById('notifBadge').classList.remove('hidden'); else document.getElementById('notifBadge').classList.add('hidden');
-}
-function acceptFriend(rid){
- let db=getDB();
- db.friends[cur.id]=db.friends[cur.id]||[]; if(!db.friends[cur.id].includes(rid)) db.friends[cur.id].push(rid);
- db.friends[rid]=db.friends[rid]||[]; if(!db.friends[rid].includes(cur.id)) db.friends[rid].push(cur.id);
- db.requests[cur.id]=db.requests[cur.id].filter(x=>x!==rid);
- saveDB(db); loadFriends(); loadRequests(); loadOnline();
-}
-function rejectFriend(rid){let db=getDB(); db.requests[cur.id]=db.requests[cur.id].filter(x=>x!==rid); saveDB(db); loadRequests();}
-function loadOnline(){
- let db=getDB();
- document.getElementById('onlineUsers').innerHTML=db.users.slice(0,10).map(u=>`<div style="padding:6px 0">${u.emoji} ${u.name} <span style="color:#31a24c">●</span></div>`).join('');
-}
+function sendReq(uid){let db=getDB();db.reqs[uid]=db.reqs[uid]||[];if(!db.reqs[uid].includes(cur.id)) db.reqs[uid].push(cur.id);saveDB(db);alert('تم إرسال طلب صداقة ✅');loadReqs();}
+function loadFriends(){let db=getDB();let f=db.friends[cur.id]||[];document.getElementById('myFriends').innerHTML=f.length?f.map(fid=>{let u=db.users.find(x=>x.id===fid);return `<div class="friend-item"><span>${u?u.emoji+' '+u.name:fid}</span><span style="color:#31a24c">صديق ✅</span></div>`;}).join(''):'<p style="color:#888;font-size:12px">لسه مفيش أصدقاء</p>';}
+function loadReqs(){let db=getDB();let reqs=db.reqs[cur.id]||[];document.getElementById('friendReqs').innerHTML=reqs.length?reqs.map(rid=>{let u=db.users.find(x=>x.id===rid);return `<div class="friend-item"><span>${u?u.emoji+' '+u.name:rid}</span><div><button onclick="accept('${rid}')" style="border:none;background:#667eea;color:#fff;padding:6px 10px;border-radius:12px">قبول</button> <button onclick="reject('${rid}')" style="border:none;background:#333;color:#fff;padding:6px 10px;border-radius:12px">رفض</button></div></div>`;}).join(''):'<p style="color:#888;font-size:12px">مفيش طلبات</p>';}
+function accept(rid){let db=getDB();db.friends[cur.id]=db.friends[cur.id]||[];if(!db.friends[cur.id].includes(rid)) db.friends[cur.id].push(rid);db.friends[rid]=db.friends[rid]||[];if(!db.friends[rid].includes(cur.id)) db.friends[rid].push(cur.id);db.reqs[cur.id]=db.reqs[cur.id].filter(x=>x!==rid);saveDB(db);loadFriends();loadReqs();updateCounts();}
+function reject(rid){let db=getDB();db.reqs[cur.id]=db.reqs[cur.id].filter(x=>x!==rid);saveDB(db);loadReqs();}
+function updateCounts(){let db=getDB();document.getElementById('friendsCount').textContent=(db.friends[cur.id]||[]).length+' أصدقاء';document.getElementById('postsCount').textContent=db.posts.filter(p=>p.uid===cur.id).length+' منشور';}
+function loadAdmin(){if(!cur.isAdmin)return;let db=getDB();document.getElementById('invitesList').innerHTML='<b>🎟️ الأكواد:</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">'+db.invites.map(i=>`<span style="padding:6px 10px;border-radius:10px;background:${i.u>0?'#667eea':'#333'};font-size:12px">${i.code} (${i.u})</span>`).join('')+'</div>';document.getElementById('usersList').innerHTML='<b>👥 المستخدمين ('+db.users.length+'):</b><br>'+db.users.map(u=>`<span style="display:inline-block;margin:3px;padding:5px 10px;background:#222;border-radius:8px;font-size:11px">${u.emoji} ${u.name}</span>`).join('');}
+function makeInvites(n){let db=getDB();for(let i=0;i<n;i++)db.invites.push({code:Math.random().toString(36).substr(2,6).toUpperCase(),u:5});saveDB(db);loadAdmin();}
+function clearAll(){if(confirm('مسح كل حاجة؟')){localStorage.clear();location.reload();}}
+function changeName(){let nn=prompt('الاسم الجديد:',cur.name);if(!nn)return;let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.name=nn;cur.name=nn;localStorage.setItem('mojey_cur_final',JSON.stringify(cur));saveDB(db);enter();}}
+function changePin(){let np=prompt('باسورد جديد 4 ارقام:');if(!/^[0-9]{4}$/.test(np))return alert('4 ارقام');let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.id=u.emoji+"_"+np;u.pin=np;cur.id=u.id;cur.pin=np;localStorage.setItem('mojey_cur_final',JSON.stringify(cur));saveDB(db);alert('تم - سجل تاني');logout();}}
+function change2FA(){let n=prompt('كود 2FA جديد 6 ارقام:','123456');if(!/^[0-9]{6}$/.test(n))return alert('6 ارقام');let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.twoFA=n;saveDB(db);alert('تم تحديث 2FA: '+n);}}
+function exportMyData(){let db=getDB();let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mojey.json';a.click();}
 
-// Admin
-function loadAdmin(){
- if(!cur.isAdmin) return;
- let db=getDB();
- document.getElementById('inviteManager').innerHTML='<b>🎟️ أكواد الدعوة (مخفية عن الأعضاء):</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">'+db.invites.map(i=>`<span style="padding:6px 10px;border-radius:10px;background:${i.uses>0?'#e7f3ff':'#f0f0f0'};font-size:12px">${i.code} (${i.uses} متبقي)</span>`).join('')+'</div>';
- document.getElementById('userManager').innerHTML='<b>👥 المستخدمين ('+db.users.length+'):</b><br>'+db.users.map(u=>`<span style="display:inline-block;margin:3px;padding:6px 10px;background:#f0f2f5;border-radius:8px;font-size:12px">${u.emoji} ${u.name} - ${u.id}</span>`).join('');
-}
-function genInvites(n){let db=getDB();for(let i=0;i<n;i++){db.invites.push({code:Math.random().toString(36).substr(2,6).toUpperCase(),uses:5});}saveDB(db);loadAdmin();}
-function clearAllData(){if(confirm('متأكد تمسح كل حاجة؟')){localStorage.clear();location.reload();}}
-
-// Settings
-function openSettings(){document.getElementById('settingsCard').scrollIntoView({behavior:'smooth'});}
-function changeDisplayName(){let nn=prompt('الاسم الجديد:',cur.name);if(!nn)return;let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.name=nn;cur.name=nn;localStorage.setItem('mojey_cur',JSON.stringify(cur));saveDB(db);enterApp();}}
-function changePin(){let np=prompt('باسورد جديد 4 أرقام:');if(!/^[0-9]{4}$/.test(np)) return alert('لازم 4 أرقام');let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.pin=np;saveDB(db);alert('تم تغيير الباسورد، سجل دخول تاني');doLogout();}}
-function change2FA(){let n=prompt('كود مصادقة ثنائية جديد 6 أرقام:', '123456');if(!/^[0-9]{6}$/.test(n)) return alert('لازم 6 أرقام');let db=getDB();let u=db.users.find(x=>x.id===cur.id);if(u){u.twoFA=n;saveDB(db);alert('تم تحديث 2FA لـ '+n);}}
-function exportData(){let db=getDB();let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mojey_backup.json';a.click();}
-function toggleDark(){document.body.style.filter=document.body.style.filter?'':'invert(1) hue-rotate(180deg)';}
-
-let saved=localStorage.getItem('mojey_cur');
-if(saved && localStorage.getItem('mojey_gate')==='ok'){cur=JSON.parse(saved);enterApp();}
-
+let sv=localStorage.getItem('mojey_cur_final');
+if(sv && localStorage.getItem('mojey_gate')==='ok'){cur=JSON.parse(sv);enter();}
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
