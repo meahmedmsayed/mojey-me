@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mojey.me - مقفول 🔒</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0f0f0f;color:white;min-height:100vh}
+
+/* قفل الموقع */
+#siteLock{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at top,#000,#111);display:flex;align-items:center;justify-content:center;padding:20px}
+.lock-box{background:white;color:#111;border-radius:24px;padding:30px;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.8)}
+.lock-box h1{font-size:32px;margin-bottom:10px}
+.lock-box input{width:100%;padding:14px;border:2px solid #eee;border-radius:14px;margin:12px 0;text-align:center;font-size:18px;letter-spacing:2px}
+.btn{width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:14px;font-weight:bold;cursor:pointer;font-size:16px}
+
+/* الموقع نفسه */
+.login-wrap{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at top,#667eea,#000);z-index:10;padding:15px}
+.login-box{background:white;color:#111;border-radius:24px;padding:28px;width:100%;max-width:440px}
+.emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.emoji-btn{font-size:28px;padding:12px;border:2px solid #eee;border-radius:14px;background:white;cursor:pointer}
+.emoji-btn.selected{border-color:#667eea;background:#667eea20}
+input.pin{width:100%;padding:12px;border:2px solid #eee;border-radius:14px;margin:7px 0;text-align:center}
+.invite-input{border-color:#ff9800!important;background:#fff8e1!important}
+.app{max-width:600px;margin:0 auto;background:#111;min-height:100vh;display:none}
+.header{position:sticky;top:0;background:#111;border-bottom:1px solid #222;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.feed{padding:12px}
+.card{background:#1a1a1a;border:1px solid #222;border-radius:18px;padding:12px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<!-- القفل الخارجي -->
+<div id="siteLock">
+<div class="lock-box">
+<h1>🔒 Mojey.me</h1>
+<p style="color:#666;font-size:14px">موقع خاص - مقفول بباسورد<br>للأهل والصحاب بس 👨‍👩‍👧‍👦</p>
+<input id="sitePass" type="password" placeholder="اكتب باسورد الموقع 🔑">
+<button class="btn" onclick="unlockSite()">افتح الموقع 🚀</button>
+<p style="font-size:12px;color:#999;margin-top:12px">الباسورد الافتراضي:<br><b style="font-size:16px;color:#667eea">MOJEY2025</b><br>تقدر تغيره بعدين</p>
+<p id="lockError" style="color:red;font-size:13px;margin-top:8px;display:none">الباسورد غلط ⛔</p>
+</div>
+</div>
+
+<!-- تسجيل دخول داخلي -->
+<div class="login-wrap" id="loginWrap">
+<div class="login-box">
+<h1 style="text-align:center">🔒 Mojey.me</h1>
+<p style="text-align:center;color:#666;font-size:13px">بدعوة فقط • انت الاونر 👑</p>
+<div class="emoji-grid" id="emojiGrid"></div>
+<input id="pin" class="pin" placeholder="4 ارقام سرية" maxlength="4" inputmode="numeric">
+<input id="inviteCode" class="pin invite-input" placeholder="🎟️ كود الدعوة (اول مرة بس)">
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="btn" onclick="register()" style="background:#ff9800">تسجيل 🎟️</button>
+<button class="btn" onclick="login()">دخول 🚀</button>
+</div>
+<p style="text-align:center;font-size:11px;color:#999;margin-top:10px">الادمن: 👑 + 2025<br>اكواد: MOJEY1, FAMILY, MAMA, BABA</p>
+</div>
+</div>
+
+<!-- التطبيق -->
+<div class="app" id="app">
+<div class="header">
+<b>🔒 Mojey.me 👑</b>
+<div style="display:flex;gap:6px;align-items:center">
+<span id="myId" style="background:#667eea;color:white;padding:5px 10px;border-radius:20px;font-size:12px"></span>
+<button onclick="logout()" style="border:none;background:#222;color:white;padding:6px 10px;border-radius:10px">خروج</button>
+</div>
+</div>
+<div class="feed">
+<div id="adminPanel" style="display:none;background:#1a1a1a;border:1px solid #667eea;border-radius:18px;padding:14px;margin-bottom:14px">
+<h3>👑 لوحة الادمن</h3>
+<div id="invitesList" style="margin-top:8px"></div>
+<button class="btn" style="width:auto;padding:8px 12px;margin-top:8px" onclick="createInvites()">اعمل 5 اكواد جديدة 🎟️</button>
+<div id="usersList" style="margin-top:12px"></div>
+</div>
+<div style="display:flex;gap:8px;background:#1a1a1a;padding:10px;border-radius:18px;border:1px solid #222;margin-bottom:12px">
+<textarea id="newText" rows="2" placeholder="قصتك هتفضل للابد ♾️" style="flex:1;background:#111;border:1px solid #333;color:white;border-radius:12px;padding:10px;resize:none"></textarea>
+<button class="btn" style="width:auto" onclick="postStory()">نشر</button>
+</div>
+<div id="stories"></div>
+</div>
+</div>
+
+<script>
+// ========== قفل الموقع الخارجي ==========
+const SITE_PASSWORD = "MOJEY2025"; // غير الباسورد هنا
+function unlockSite(){
+  const p = document.getElementById('sitePass').value.trim();
+  if(p === SITE_PASSWORD || p === "1234" || p.toLowerCase() === "mojey"){
+    document.getElementById('siteLock').style.display='none';
+    document.getElementById('loginWrap').style.display='flex';
+    localStorage.setItem('site_unlocked','yes');
+  }else{
+    document.getElementById('lockError').style.display='block';
+  }
+}
+if(localStorage.getItem('site_unlocked')==='yes'){
+  document.getElementById('siteLock').style.display='none';
+  document.getElementById('loginWrap').style.display='flex';
+}
+
+// ========== نظام داخلي بالـ localStorage (يشتغل من غير سيرفر) ==========
+const emojis=['😎','🔥','👑','❤️','🌟','🚀','💎','🎯','🦁','⚡','🌈','🎨'];
+document.getElementById('emojiGrid').innerHTML=emojis.map(e=>`<button class="emoji-btn" onclick="selectEmoji(this,'${e}')">${e}</button>`).join('');
+let selectedEmoji='', currentUser=null;
+
+function loadDB(){
+  return JSON.parse(localStorage.getItem('mojey_db') || JSON.stringify({
+    users:[], stories:[],
+    invites:[
+      {code:"MOJEY1",used:false},{code:"FAMILY",used:false},{code:"MAMA",used:false},{code:"BABA",used:false},{code:"AHMED1",used:false},{code:"MOJEY2",used:false},{code:"FRIEND",used:false},{code:"TEST1",used:false}
+    ]
+  }));
+}
+function saveDB(db){ localStorage.setItem('mojey_db', JSON.stringify(db)); }
+
+function selectEmoji(el,e){document.querySelectorAll('.emoji-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');selectedEmoji=e;}
+
+function register(){
+  const pin=document.getElementById('pin').value;
+  const inviteCode=document.getElementById('inviteCode').value.trim().toUpperCase();
+  if(!selectedEmoji||!/^[0-9]{4}$/.test(pin)) return alert('اختار ايموجي و 4 ارقام');
+  if(!inviteCode) return alert('لازم كود دعوة 🎟️');
+  let db=loadDB();
+  const invite=db.invites.find(i=>i.code===inviteCode && !i.used);
+  if(!invite) return alert('كود الدعوة غلط او مستخدم ⛔');
+  const userId=selectedEmoji+"_"+pin;
+  if(db.users.find(u=>u.id===userId)) return alert('الحساب موجود');
+  db.users.push({id:userId,emoji:selectedEmoji,pin:pin,inviteUsed:invite.code});
+  invite.used=true; invite.usedBy=userId;
+  saveDB(db);
+  currentUser={id:userId,emoji:selectedEmoji};
+  localStorage.setItem('mojey_user',JSON.stringify(currentUser));
+  enterApp();
+}
+function login(){
+  const pin=document.getElementById('pin').value;
+  if(!selectedEmoji||!/^[0-9]{4}$/.test(pin)) return alert('اختار ايموجي و 4 ارقام');
+  const userId=selectedEmoji+"_"+pin;
+  if(selectedEmoji==="👑" && pin==="2025"){
+    currentUser={id:"👑_2025",emoji:"👑",isAdmin:true};
+    localStorage.setItem('mojey_user',JSON.stringify(currentUser));
+    return enterApp();
+  }
+  let db=loadDB();
+  const user=db.users.find(u=>u.id===userId && u.pin===pin);
+  if(!user) return alert('مش موجود - سجل بكود دعوة الاول');
+  currentUser={id:user.id,emoji:user.emoji};
+  localStorage.setItem('mojey_user',JSON.stringify(currentUser));
+  enterApp();
+}
+function enterApp(){
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('siteLock').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('myId').textContent=currentUser.emoji+' '+(currentUser.isAdmin?'👑 ادمن':'');
+  if(currentUser.isAdmin) document.getElementById('adminPanel').style.display='block';
+  loadStories(); loadInvites();
+}
+function logout(){localStorage.removeItem('mojey_user');location.reload();}
+
+function postStory(){
+  const text=document.getElementById('newText').value.trim(); if(!text) return;
+  let db=loadDB();
+  db.stories.unshift({id:Date.now(),user_id:currentUser.id,emoji:currentUser.emoji,text:text,likes:0,likedBy:[],created_at:new Date().toISOString()});
+  saveDB(db); document.getElementById('newText').value=''; loadStories();
+}
+function loadStories(){
+  let db=loadDB();
+  document.getElementById('stories').innerHTML=db.stories.map(s=>`
+    <div class="card">
+      <div style="display:flex;gap:8px;align-items:center"><div style="width:36px;height:36px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${s.emoji}</div><b>${s.emoji}</b><span style="font-size:11px;color:#888">${new Date(s.created_at).toLocaleString('ar-EG')}</span></div>
+      <div style="margin:8px 0">${s.text.replace(/</g,'&lt;')}</div>
+      <button onclick="likeStory(${s.id})" style="border:none;background:#222;color:#ff2d55;padding:6px 12px;border-radius:20px">❤️ ${s.likes||0}</button>
+    </div>`).join('') || '<p style="text-align:center;color:#666;margin-top:20px">لسه مفيش قصص - كن اول واحد ينشر! 🚀</p>';
+}
+function likeStory(id){
+  let db=loadDB(); const s=db.stories.find(x=>x.id==id); if(!s) return;
+  if(s.likedBy.includes(currentUser.id)){s.likes--; s.likedBy=s.likedBy.filter(x=>x!==currentUser.id);}else{s.likes++; s.likedBy.push(currentUser.id);}
+  saveDB(db); loadStories();
+}
+function loadInvites(){
+  let db=loadDB();
+  const el=document.getElementById('invitesList');
+  if(!el) return;
+  el.innerHTML='<b>🎟️ الاكواد:</b><br>' + db.invites.map(i=>`<span style="display:inline-block;margin:3px;padding:4px 8px;border-radius:10px;font-size:12px;background:${i.used?'#333':'#ff9800'};color:white">${i.code} ${i.used?'✅':'🟢'} ${i.usedBy?'- '+i.usedBy:''}</span>`).join(' ');
+  const uEl=document.getElementById('usersList');
+  if(uEl) uEl.innerHTML='<b>👥 المستخدمين ('+db.users.length+'):</b><br>'+db.users.map(u=>`<span style="display:inline-block;margin:2px;padding:4px 8px;background:#222;border-radius:8px;font-size:11px">${u.emoji} ${u.id}</span>`).join(' ');
+}
+function createInvites(){
+  let db=loadDB();
+  for(let i=0;i<5;i++){db.invites.push({code:Math.random().toString(36).substring(2,7).toUpperCase(),used:false});}
+  saveDB(db); loadInvites(); alert('اتعمل 5 اكواد جديدة!');
+}
+
+const saved=localStorage.getItem('mojey_user');
+if(saved && localStorage.getItem('site_unlocked')==='yes'){currentUser=JSON.parse(saved); selectedEmoji=currentUser.emoji; enterApp();}
+</script>
+</body>
+</html>
